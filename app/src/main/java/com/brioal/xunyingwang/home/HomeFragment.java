@@ -20,9 +20,8 @@ import com.brioal.bannerview.OnBannerClickListener;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseFragment;
 import com.brioal.xunyingwang.bean.HomeBean;
-import com.brioal.xunyingwang.home.adapter.MovieAdapter;
+import com.brioal.xunyingwang.home.adapter.VideoAdapter;
 import com.brioal.xunyingwang.home.adapter.RecommendAdapter;
-import com.brioal.xunyingwang.home.adapter.TvAdapter;
 import com.brioal.xunyingwang.home.contract.HomeContract;
 import com.brioal.xunyingwang.home.presenter.HomePresenter;
 import com.brioal.xunyingwang.view.ScrollRecyclerView;
@@ -160,26 +159,46 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         mRecommendRecyclerView.setHasFixedSize(true);
         mRecommendRecyclerView.setNestedScrollingEnabled(false);
         mRecommendRecyclerView.setAdapter(recommendAdapter);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
+        gridLayoutManager.setAutoMeasureEnabled(true);
+
         //显示最新电影
-        MovieAdapter movieAdapter = new MovieAdapter(mContext);
-        movieAdapter.setList(homeBean.getNewMovies());
-        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
-        mMovieRecyclerView.setAdapter(movieAdapter);
+        VideoAdapter videoAdapter = new VideoAdapter(mContext);
+        videoAdapter.setList(homeBean.getNewMovies());
+        GridLayoutManager movieGridLayout = new GridLayoutManager(mContext, 3);
+        movieGridLayout.setAutoMeasureEnabled(true);
+        mMovieRecyclerView.setLayoutManager(movieGridLayout);
+        mMovieRecyclerView.setAdapter(videoAdapter);
+        mMovieRecyclerView.setHasFixedSize(true);
+        mMovieRecyclerView.setNestedScrollingEnabled(false);
         //显示最新电视剧
-        TvAdapter tvAdapter = new TvAdapter(mContext);
+        VideoAdapter tvAdapter = new VideoAdapter(mContext);
         tvAdapter.setList(homeBean.getNewTvs());
-        mTvRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        GridLayoutManager tvGridLayout = new GridLayoutManager(mContext, 3);
+        tvGridLayout.setAutoMeasureEnabled(true);
+        mTvRecyclerView.setLayoutManager(tvGridLayout);
         mTvRecyclerView.setAdapter(tvAdapter);
+        mTvRecyclerView.setHasFixedSize(true);
+        mTvRecyclerView.setNestedScrollingEnabled(false);
         //显示最新动作
-        MovieAdapter actionAdapter = new MovieAdapter(mContext);
+        VideoAdapter actionAdapter = new VideoAdapter(mContext);
         actionAdapter.setList(homeBean.getNewActions());
-        mActionRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        GridLayoutManager actionGridLayout = new GridLayoutManager(mContext, 3);
+        actionGridLayout.setAutoMeasureEnabled(true);
+        mActionRecyclerView.setLayoutManager(actionGridLayout);
         mActionRecyclerView.setAdapter(actionAdapter);
+        mActionRecyclerView.setHasFixedSize(true);
+        mActionRecyclerView.setNestedScrollingEnabled(false);
         //显示最新科幻
-        MovieAdapter scienceAdapter = new MovieAdapter(mContext);
+        VideoAdapter scienceAdapter = new VideoAdapter(mContext);
         scienceAdapter.setList(homeBean.getNewScience());
-        mScienceRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3));
+        GridLayoutManager scienceGridLayout = new GridLayoutManager(mContext, 3);
+        scienceGridLayout.setAutoMeasureEnabled(true);
+        mScienceRecyclerView.setLayoutManager(scienceGridLayout);
         mScienceRecyclerView.setAdapter(scienceAdapter);
+        mScienceRecyclerView.setHasFixedSize(true);
+        mScienceRecyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override

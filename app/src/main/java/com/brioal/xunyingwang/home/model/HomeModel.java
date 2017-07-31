@@ -4,7 +4,6 @@ import com.brioal.bannerview.BannerBean;
 import com.brioal.xunyingwang.bean.HomeBean;
 import com.brioal.xunyingwang.bean.MovieBean;
 import com.brioal.xunyingwang.bean.RecommendBean;
-import com.brioal.xunyingwang.bean.TVBean;
 import com.brioal.xunyingwang.home.contract.HomeContract;
 import com.socks.library.KLog;
 
@@ -114,8 +113,11 @@ public class HomeModel implements HomeContract.Model {
             while (matcher.find()) {
                 id = matcher.group();
             }
-            //清晰度
-            String quality = moviesDocument.getElementsByTag("span").first().text();
+            Elements spans = moviesDocument.getElementsByTag("span");
+            String quality = "";
+            if (spans.size() > 0) {
+                quality = spans.first().text();
+            }
             //封面地址
             String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
             MovieBean movieBean = new MovieBean();
@@ -180,7 +182,11 @@ public class HomeModel implements HomeContract.Model {
                 id = matcher.group();
             }
             //清晰度
-            String quality = moviesDocument.getElementsByTag("span").first().text();
+            Elements spans = moviesDocument.getElementsByTag("span");
+            String quality = "";
+            if (spans.size() > 0) {
+                quality = spans.first().text();
+            }
             //封面地址
             String coverUrl = moviesDocument.getElementsByTag("img").first().attr("data-original");
             MovieBean movieBean = new MovieBean();
@@ -207,8 +213,8 @@ public class HomeModel implements HomeContract.Model {
      * @param mainDocuments
      * @return
      */
-    private List<TVBean> getTvs(Document mainDocuments) {
-        List<TVBean> list = new ArrayList<>();
+    private List<MovieBean> getTvs(Document mainDocuments) {
+        List<MovieBean> list = new ArrayList<>();
         Element document = mainDocuments.getElementsByClass("col-xs-12 index-box").first();
         Elements tvDocuments = document.getElementsByClass("col-xs-1-5 movie-item");
         for (int i = 0; i < tvDocuments.size(); i++) {
@@ -237,11 +243,11 @@ public class HomeModel implements HomeContract.Model {
             }
             //Actors
             String actors = tvDocument.getElementsByClass("otherinfo").first().text().trim();
-            TVBean bean = new TVBean();
+            MovieBean bean = new MovieBean();
             bean.setName(name)
                     .setID(id)
                     .setRank(rank)
-                    .setActors(actors)
+                    .setmActors(actors)
                     .setCoverUrl(coverUrl);
             list.add(bean);
             KLog.d(id);
@@ -296,7 +302,11 @@ public class HomeModel implements HomeContract.Model {
                 id = matcher.group();
             }
             //清晰度
-            String quality = movie.getElementsByTag("span").first().text();
+            Elements spans = movie.getElementsByTag("span");
+            String quality = "";
+            if (spans.size() > 0) {
+                 quality = spans.first().text();
+            }
             //封面地址
             String coverUrl = movie.getElementsByTag("img").first().attr("data-original");
             MovieBean movieBean = new MovieBean();

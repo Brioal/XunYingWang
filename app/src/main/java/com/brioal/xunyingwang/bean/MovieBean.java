@@ -1,5 +1,8 @@
 package com.brioal.xunyingwang.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 电影实体类
  * email:brioal@foxmail.com
@@ -14,7 +17,16 @@ public class MovieBean {
     private String[] mTypes;//电影类型
     private String mCoverUrl = "";//封面的图片地址
     private String mRank = "";//评分
+    private String mActors = "";//演员
 
+    public String getmActors() {
+        return mActors;
+    }
+
+    public MovieBean setmActors(String mActors) {
+        this.mActors = mActors;
+        return this;
+    }
 
     public String getRank() {
         return mRank;
@@ -69,4 +81,5 @@ public class MovieBean {
         mCoverUrl = coverUrl;
         return this;
     }
+
 }
