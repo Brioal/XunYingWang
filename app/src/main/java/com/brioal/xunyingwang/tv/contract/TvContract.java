@@ -1,6 +1,6 @@
 package com.brioal.xunyingwang.tv.contract;
 
-import com.brioal.xunyingwang.bean.TVBean;
+import com.brioal.xunyingwang.bean.MovieBean;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface TvContract {
     interface View {
         void showRefreshing();
 
-        void showList(List<TVBean> list);
+        void showList(List<MovieBean> list);
 
         void showFailed(String errorMsg);
     }
@@ -30,7 +30,7 @@ public interface TvContract {
     }
 
     interface OnTvLoadListener{
-        void success(List<TVBean> list);
+        void success(List<MovieBean> list);
 
         void failed(String errorMsg);
     }

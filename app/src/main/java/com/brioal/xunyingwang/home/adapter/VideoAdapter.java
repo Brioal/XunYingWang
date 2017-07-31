@@ -25,11 +25,11 @@ import butterknife.ButterKnife;
  * Created by Brioal on 2017/7/30.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private Context mContext;
     private List<MovieBean> mList = new ArrayList<>();
 
-    public MovieAdapter(Context context) {
+    public VideoAdapter(Context context) {
         mContext = context;
     }
 
@@ -40,6 +40,15 @@ public class MovieAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      */
     public void setList(List<MovieBean> list) {
         mList.clear();
+        mList.addAll(list);
+    }
+
+    /**
+     * 添加内容
+     *
+     * @param list
+     */
+    public void addList(List<MovieBean> list) {
         mList.addAll(list);
     }
 
@@ -88,31 +97,47 @@ public class MovieAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             //标题
             mTvTitle.setText(object.getName());
             //清晰度
-            mTvQuality.setText(object.getQuality());
+            if (object.getQuality() == null) {
+                mTvQuality.setVisibility(View.GONE);
+            } else {
+                mTvQuality.setVisibility(View.VISIBLE);
+                mTvQuality.setText(object.getQuality());
+            }
             //评分
             mTvRank.setText(object.getRank());
-            //类型
-            if (object.getTypes().length > 0) {
-                mTvType1.setText(object.getTypes()[0]);
-                mTvType1.setVisibility(View.VISIBLE);
+            if (object.getmActors() == null || object.getmActors().isEmpty()) {
+                //显示类型
+                mTvType2.setVisibility(View.VISIBLE);
+                mTvType3.setVisibility(View.VISIBLE);
+                //类型
+                if (object.getTypes().length > 0) {
+                    mTvType1.setText(object.getTypes()[0]);
+                    mTvType1.setVisibility(View.VISIBLE);
+                    mTvType2.setVisibility(View.GONE);
+                    mTvType3.setVisibility(View.GONE);
+                }
+                if (object.getTypes().length > 1) {
+                    mTvType1.setText(object.getTypes()[0]);
+                    mTvType2.setText(object.getTypes()[1]);
+                    mTvType1.setVisibility(View.VISIBLE);
+                    mTvType2.setVisibility(View.VISIBLE);
+                    mTvType3.setVisibility(View.GONE);
+                }
+                if (object.getTypes().length > 2) {
+                    mTvType1.setText(object.getTypes()[0]);
+                    mTvType2.setText(object.getTypes()[1]);
+                    mTvType3.setText(object.getTypes()[2]);
+                    mTvType1.setVisibility(View.VISIBLE);
+                    mTvType2.setVisibility(View.VISIBLE);
+                    mTvType3.setVisibility(View.VISIBLE);
+                }
+            } else {
+                //显示主演
+                mTvType1.setText(object.getmActors());
                 mTvType2.setVisibility(View.GONE);
                 mTvType3.setVisibility(View.GONE);
             }
-            if (object.getTypes().length > 1) {
-                mTvType1.setText(object.getTypes()[0]);
-                mTvType2.setText(object.getTypes()[1]);
-                mTvType1.setVisibility(View.VISIBLE);
-                mTvType2.setVisibility(View.VISIBLE);
-                mTvType3.setVisibility(View.GONE);
-            }
-            if (object.getTypes().length > 2) {
-                mTvType1.setText(object.getTypes()[0]);
-                mTvType2.setText(object.getTypes()[1]);
-                mTvType3.setText(object.getTypes()[2]);
-                mTvType1.setVisibility(View.VISIBLE);
-                mTvType2.setVisibility(View.VISIBLE);
-                mTvType3.setVisibility(View.VISIBLE);
-            }
+
             //点击事件
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -26,20 +26,61 @@ public class MoviePresenter implements MovieContract.Presenter {
 
     @Override
     public void start() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mView.showRefreshing();
+            }
+        });
         refresh();
     }
 
     @Override
     public void refresh() {
-        mModel.loadMovies(new MovieContract.OnMoviesLoadListener() {
+        mModel.loadMovies(mView.getYear(), mView.getRank(), mView.getArea(), mView.getType(), mView.getPage(), new MovieContract.OnMoviesLoadListener() {
             @Override
-            public void success(List<MovieBean> list) {
-
+            public void success(final List<MovieBean> list) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showMovies(list);
+                    }
+                });
             }
 
             @Override
-            public void failed(String errorMsg) {
+            public void failed(final String errorMsg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showFailed(errorMsg);
+                    }
+                });
+            }
+        });
+    }
 
+    @Override
+    public void loadMore() {
+        mModel.loadMovies(mView.getYear(), mView.getRank(), mView.getArea(), mView.getType(), mView.getPage(), new MovieContract.OnMoviesLoadListener() {
+            @Override
+            public void success(final List<MovieBean> list) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.addMovies(list);
+                    }
+                });
+            }
+
+            @Override
+            public void failed(final String errorMsg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showFailed(errorMsg);
+                    }
+                });
             }
         });
     }

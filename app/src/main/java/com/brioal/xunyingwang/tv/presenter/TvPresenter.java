@@ -2,7 +2,7 @@ package com.brioal.xunyingwang.tv.presenter;
 
 import android.os.Handler;
 
-import com.brioal.xunyingwang.bean.TVBean;
+import com.brioal.xunyingwang.bean.MovieBean;
 import com.brioal.xunyingwang.tv.contract.TvContract;
 import com.brioal.xunyingwang.tv.model.TvModel;
 
@@ -26,6 +26,12 @@ public class TvPresenter implements TvContract.Presenter {
 
     @Override
     public void start() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mView.showRefreshing();
+            }
+        });
         refresh();
     }
 
@@ -33,13 +39,23 @@ public class TvPresenter implements TvContract.Presenter {
     public void refresh() {
         mModel.loadTvs(new TvContract.OnTvLoadListener() {
             @Override
-            public void success(List<TVBean> list) {
-
+            public void success(final List<MovieBean> list) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showList(list);
+                    }
+                });
             }
 
             @Override
-            public void failed(String errorMsg) {
-
+            public void failed(final String errorMsg) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mView.showFailed(errorMsg);
+                    }
+                });
             }
         });
     }

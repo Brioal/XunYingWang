@@ -15,10 +15,9 @@ public class HomeBean {
     private List<BannerBean> mBanners = new ArrayList<>();//首页轮播图
     private List<RecommendBean> mRecommendBeans = new ArrayList<>();//推荐资源
     private List<MovieBean> mNewMovies = new ArrayList<>();//最新电影
-    private List<TVBean> mNewTvs = new ArrayList<>();//最新电视剧
+    private List<MovieBean> mNewTvs = new ArrayList<>();//最新电视剧
     private List<MovieBean> mNewActions = new ArrayList<>();//最新动作电影
     private List<MovieBean> mNewScience = new ArrayList<>();//最新科幻电影
-
 
     public List<RecommendBean> getRecommendBeans() {
         return mRecommendBeans;
@@ -33,11 +32,11 @@ public class HomeBean {
         return this;
     }
 
-    public List<TVBean> getNewTvs() {
+    public List<MovieBean> getNewTvs() {
         return mNewTvs;
     }
 
-    public HomeBean setNewTvs(List<TVBean> newTvs) {
+    public HomeBean setNewTvs(List<MovieBean> newTvs) {
         mNewTvs = newTvs;
         return this;
     }
