@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseViewHolder;
 import com.brioal.xunyingwang.bean.RecommendBean;
+import com.brioal.xunyingwang.detail.DetailActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         }
 
         @Override
-        public void bindView(RecommendBean object, int position) {
+        public void bindView(final RecommendBean object, int position) {
             //显示图片
             Glide.with(mContext).load(object.getPicUrl()).error(R.mipmap.ic_temp_pic).into(mIvImg);
             //显示标题
@@ -73,7 +74,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2017/7/30 电影详情
+                    DetailActivity.enterDetail(mContext, object.getId(),"movie");
                 }
             });
         }

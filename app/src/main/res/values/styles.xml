@@ -15,4 +15,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="WhiteToolBar">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorButtonNormal">@android:color/white</item>
+    </style>
+
 </resources>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.brioal.xunyingwang.R;
 import com.brioal.xunyingwang.base.BaseViewHolder;
 import com.brioal.xunyingwang.bean.MovieBean;
+import com.brioal.xunyingwang.detail.DetailActivity;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -25,12 +26,18 @@ import butterknife.ButterKnife;
  * Created by Brioal on 2017/7/30.
  */
 
-public class MovieAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private Context mContext;
     private List<MovieBean> mList = new ArrayList<>();
 
-    public MovieAdapter(Context context) {
+    public VideoAdapter(Context context) {
         mContext = context;
+    }
+
+    private String mType = "movie";
+
+    public void setType(String type) {
+        mType = type;
     }
 
     /**
@@ -40,6 +47,15 @@ public class MovieAdapter extends RecyclerView.Adapter<BaseViewHolder> {
      */
     public void setList(List<MovieBean> list) {
         mList.clear();
+        mList.addAll(list);
+    }
+
+    /**
+     * 添加内容
+     *
+     * @param list
+     */
+    public void addList(List<MovieBean> list) {
         mList.addAll(list);
     }
 
@@ -82,42 +98,58 @@ public class MovieAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        public void bindView(MovieBean object, int position) {
+        public void bindView(final MovieBean object, int position) {
             //图片
             Glide.with(mContext).load(object.getCoverUrl()).error(R.mipmap.ic_temp_pic).into(mIvImg);
             //标题
             mTvTitle.setText(object.getName());
             //清晰度
-            mTvQuality.setText(object.getQuality());
+            if (object.getQuality() == null) {
+                mTvQuality.setVisibility(View.GONE);
+            } else {
+                mTvQuality.setVisibility(View.VISIBLE);
+                mTvQuality.setText(object.getQuality());
+            }
             //评分
             mTvRank.setText(object.getRank());
-            //类型
-            if (object.getTypes().length > 0) {
-                mTvType1.setText(object.getTypes()[0]);
-                mTvType1.setVisibility(View.VISIBLE);
+            if (object.getmActors() == null || object.getmActors().isEmpty()) {
+                //显示类型
+                mTvType2.setVisibility(View.VISIBLE);
+                mTvType3.setVisibility(View.VISIBLE);
+                //类型
+                if (object.getTypes().length > 0) {
+                    mTvType1.setText(object.getTypes()[0]);
+                    mTvType1.setVisibility(View.VISIBLE);
+                    mTvType2.setVisibility(View.GONE);
+                    mTvType3.setVisibility(View.GONE);
+                }
+                if (object.getTypes().length > 1) {
+                    mTvType1.setText(object.getTypes()[0]);
+                    mTvType2.setText(object.getTypes()[1]);
+                    mTvType1.setVisibility(View.VISIBLE);
+                    mTvType2.setVisibility(View.VISIBLE);
+                    mTvType3.setVisibility(View.GONE);
+                }
+                if (object.getTypes().length > 2) {
+                    mTvType1.setText(object.getTypes()[0]);
+                    mTvType2.setText(object.getTypes()[1]);
+                    mTvType3.setText(object.getTypes()[2]);
+                    mTvType1.setVisibility(View.VISIBLE);
+                    mTvType2.setVisibility(View.VISIBLE);
+                    mTvType3.setVisibility(View.VISIBLE);
+                }
+            } else {
+                //显示主演
+                mTvType1.setText(object.getmActors());
                 mTvType2.setVisibility(View.GONE);
                 mTvType3.setVisibility(View.GONE);
             }
-            if (object.getTypes().length > 1) {
-                mTvType1.setText(object.getTypes()[0]);
-                mTvType2.setText(object.getTypes()[1]);
-                mTvType1.setVisibility(View.VISIBLE);
-                mTvType2.setVisibility(View.VISIBLE);
-                mTvType3.setVisibility(View.GONE);
-            }
-            if (object.getTypes().length > 2) {
-                mTvType1.setText(object.getTypes()[0]);
-                mTvType2.setText(object.getTypes()[1]);
-                mTvType3.setText(object.getTypes()[2]);
-                mTvType1.setVisibility(View.VISIBLE);
-                mTvType2.setVisibility(View.VISIBLE);
-                mTvType3.setVisibility(View.VISIBLE);
-            }
+
             //点击事件
             mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: 2017/7/30 电影详情
+                    DetailActivity.enterDetail(mContext, object.getID(), mType);
                 }
             });
         }

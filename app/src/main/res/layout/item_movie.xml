@@ -73,7 +73,9 @@
             android:layout_marginLeft="2dp"
             android:layout_toRightOf="@id/item_movie_tv_type_title"
             android:background="@drawable/item_movie_type_bg"
+            android:ellipsize="end"
             android:padding="1dp"
+            android:singleLine="true"
             android:text="类型1"
             android:textColor="@android:color/white"
             android:textSize="8sp"/>
